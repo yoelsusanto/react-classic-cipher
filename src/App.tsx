@@ -1,26 +1,21 @@
 import React from 'react';
-import logo from './logo.svg';
+
+import AppHeader from 'components/AppHeader';
+import Pipeline from 'pages/Pipeline';
+import AppFooter from 'components/AppFooter';
+
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+const App: React.FC<{}> = () => {
+    return (
+        <div className="min-h-screen flex flex-col">
+            <AppHeader />
+            <div className="flex-1 bg-gray-300">
+                <Pipeline />
+            </div>
+            <AppFooter />
+        </div>
+    );
+};
 
 export default App;
