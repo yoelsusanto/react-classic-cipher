@@ -87,22 +87,49 @@ class App extends Component {
 
     let updateInput = input.replace(/[^a-zA-Z0-9+]/g, "").toUpperCase()
     
-    //console.log(storage);
-    
-    //create key
-    if (key.length <updateInput.length){
-      var inputstr = updateInput.substr(0,updateInput.length-key.length)
-      key += inputstr
-    }
-    if( type === ENCODE){
-      localStorage.setItem(AUTO, key);
-    }
 
     let output = "";
-    for (let i = 0; i < updateInput.length; i++) {
-      if (i % 5 === 0 && type === ENCODE){
-        output+=" ";
+    //console.log(key);
+    if( type === ENCODE){
+      //encode
+      if (key.length <updateInput.length){
+        var inputstr = updateInput.substr(0,updateInput.length-key.length)
+        key += inputstr
       }
+  
+      for (let i = 0; i < updateInput.length; i++) {
+        if (i % 5 === 0 && type === ENCODE){
+          output+=" ";
+        }
+        let currentLetter = updateInput[i];
+        
+        if (currentLetter === " " || !currentLetter.match(/[A-Z]/g)) { 
+          output += currentLetter;
+          continue;
+        }
+  
+        let currentIndex;
+ 
+          //encode
+          currentIndex = (ALPHABET.indexOf(currentLetter) + ALPHABET.indexOf(key[i]))%26; 
+        
+    
+  
+        if (currentIndex - ALPHABET.length >= 0) { 
+          currentIndex -= ALPHABET.length;
+        }
+  
+        let newLetter = ALPHABET[currentIndex]; 
+  
+        output += newLetter;
+  
+      }
+      localStorage.setItem(AUTO, key);
+    } else {
+
+   //decode
+    for (let i = 0; i < updateInput.length; i++) {
+
       let currentLetter = updateInput[i];
       
       if (currentLetter === " " || !currentLetter.match(/[A-Z]/g)) { 
@@ -110,27 +137,22 @@ class App extends Component {
         continue;
       }
 
-      let currentIndex;
-      if (type === ENCODE){
-        //encode
-        currentIndex = (ALPHABET.indexOf(currentLetter) + ALPHABET.indexOf(key[i]))%26; 
-      } else {
-        //decode
-        let updatedKey = localStorage.getItem(AUTO);
-        currentIndex = ((ALPHABET.indexOf(currentLetter) - ALPHABET.indexOf(updatedKey[i]))+26)%26; 
-      }
+      let currentIndex = ((ALPHABET.indexOf(currentLetter) - ALPHABET.indexOf(key[i])))%26; 
+      
       
   
 
-      if (currentIndex - ALPHABET.length >= 0) { 
-        currentIndex -= ALPHABET.length;
+      if (currentIndex < 0) { 
+        currentIndex = 26 -(-1*currentIndex);
       }
 
       let newLetter = ALPHABET[currentIndex]; 
 
       output += newLetter;
+      key+=newLetter;
 
     }
+  }
     this.setState({
       output: output
     })
