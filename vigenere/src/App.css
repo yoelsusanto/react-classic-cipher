@@ -1,0 +1,85 @@
+.App {
+  text-align: center;
+  font-family: 'Oxygen', sans-serif;
+}
+.textarea {
+  position: center;
+  width: 600px;
+  height: 350px;
+  margin: 0;
+  padding: 0;
+  border: 2px solid #30496B;
+  height: 125px;
+  border-radius: 6px 6px 6px 6px;
+}
+
+h1{
+  font-size: 20px;
+  font-weight: normal;
+  font-family: 'Oxygen', sans-serif;
+  border-radius: 6px 6px 6px 6px;
+}
+.result{
+  white-space: pre;
+}
+button{
+  position: relative;
+  background-color: #dbecf0;
+	border-radius: 8px;
+	border-bottom: 4px solid rgba(94, 144, 173, 0.705);
+	color: #428998;
+	padding: 15px 32px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 16px;
+	font-family: 'Oxygen', sans-serif;
+	letter-spacing: 2px;
+  cursor: pointer;
+  margin-left: 50px;
+  margin-bottom: 20px;
+  margin-top: 15px;
+}
+button:hover {
+  background-color: #dbecf0;
+  border: none;
+  border-radius: 8px;
+	border-bottom: 4px solid  rgba(94, 144, 173, 0.705);
+  color: #428998;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  font-family: 'Oxygen', sans-serif;
+  letter-spacing: 2px;
+}
+
+button:active {
+  background-color: #a8a8a8;
+  border: none;
+  border-radius: 8px;
+  border-bottom: 4px solid rgba(94, 144, 173, 0.705);
+  color: #357581;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  font-family: 'Oxygen', sans-serif;
+  letter-spacing: 2px;
+}
+
+.App-header {
+  background-image: linear-gradient(to right, #051937, #00223e, #002b45, #00344a, #003d4e);
+  /* background: linear-gradient(45deg,#30496B,#30B8D2); */
+  opacity: 0.85;
+  min-height: 100vh;
+  display: flex;
+  margin-bottom: -20px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
