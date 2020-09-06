@@ -1,6 +1,21 @@
 import React, { Component } from 'react';
 import './App.css';
 import {ALPHABET, DECODE, ENCODE, STANDARD, AUTO} from './constant.js';
+
+function create2DArray(rows, columns, value = (x, y) => 0) {
+  var array = new Array(rows);
+  for (var i = 0; i < rows; i++) {
+    array[i] = new Array(columns);
+    for (var j = 0; j < columns; j++) {
+      array[i][j] = value(i, j);
+    }
+  }
+
+  return array;
+}
+
+
+
 class App extends Component {
   constructor(props) {
     super(props);
@@ -87,7 +102,7 @@ class App extends Component {
 
     let updateInput = input.replace(/[^a-zA-Z0-9+]/g, "").toUpperCase()
     
-
+   
     let output = "";
     //console.log(key);
     if( type === ENCODE){
@@ -143,7 +158,7 @@ class App extends Component {
   
 
       if (currentIndex < 0) { 
-        currentIndex = 26 -(-1*currentIndex);
+        currentIndex += 26;
       }
 
       let newLetter = ALPHABET[currentIndex]; 
@@ -159,25 +174,126 @@ class App extends Component {
 
 
   }
-  generateKey(input,key){
-    
-  }
-  componentDidMount(){
+  fullVigenere(input,initkey,type){
+    let key = initkey;
 
+    let updateInput = input
+    let output="";
+
+    var array = create2DArray(26, 26, (row, column) => row + column);
+    console.log(array);
+
+      //create key
+      let shift;
+      let keyIndex =0;
+
+      if (type === ENCODE){
+          for (let i = 0; i < updateInput.length; i++) {
+              let currentLetter = updateInput[i];
+
+              shift= (key.charCodeAt(keyIndex))-97
+              console.log(shift)
+              keyIndex++;
+              keyIndex = keyIndex % key.length
+
+          
+
+              let currentIndex = (currentLetter.charCodeAt(0) + shift )% 256
+
+              let newLetter = String.fromCharCode(currentIndex);
+              output+=newLetter
+            }
+      } else {
+          for (let i = 0; i < updateInput.length; i++) {
+              let currentLetter = updateInput[i];
+
+              shift= (key.charCodeAt(keyIndex))-97
+              console.log(shift)
+              keyIndex++;
+              keyIndex = keyIndex % key.length
+
+          
+
+              let currentIndex = ((currentLetter.charCodeAt(0) - shift) )% 256
+              if (currentIndex < 0){
+                currentIndex +=256
+              }
+              let newLetter = String.fromCharCode(currentIndex);
+              output+=newLetter;
+            }
+      }
+
+
+    this.setState({
+      output: output
+    })  
+  }
+  extendedVigenere(input,initkey,type){
+    let key = initkey;
+
+    let updateInput = input
+    let output="";
+
+
+
+      //create key
+      let shift;
+      let keyIndex =0;
+
+      if (type === ENCODE){
+          for (let i = 0; i < updateInput.length; i++) {
+              let currentLetter = updateInput[i];
+
+              shift= (key.charCodeAt(keyIndex))-97
+              console.log(shift)
+              keyIndex++;
+              keyIndex = keyIndex % key.length
+
+          
+
+              let currentIndex = (currentLetter.charCodeAt(0) + shift )% 256
+
+              let newLetter = String.fromCharCode(currentIndex);
+              output+=newLetter
+            }
+      } else {
+          for (let i = 0; i < updateInput.length; i++) {
+              let currentLetter = updateInput[i];
+
+              shift= (key.charCodeAt(keyIndex))-97
+              console.log(shift)
+              keyIndex++;
+              keyIndex = keyIndex % key.length
+
+          
+
+              let currentIndex = ((currentLetter.charCodeAt(0) - shift) )% 256
+              if (currentIndex < 0){
+                currentIndex +=256
+              }
+              let newLetter = String.fromCharCode(currentIndex);
+              output+=newLetter;
+            }
+      }
+
+
+    this.setState({
+      output: output
+    })  
   }
   encode() {
-     
+    
       this.vigenereAuto(this.state.input,this.state.key,ENCODE);
 
 
     }
 
-       decode() {
+  decode() {
 
-          this.vigenereAuto(this.state.input,this.state.key,DECODE);
+          this.extendedVigenere(this.state.input,this.state.key,DECODE);
     
     
-        }
+  }
 
     render() {
       return (
