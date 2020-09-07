@@ -12,4 +12,7 @@ module.exports = {
             body: ['sans-serif'],
         },
     },
+    variants: {
+        boxShadow: ['responsive', 'hover', 'focus', 'focus-within'],
+    },
 };
