@@ -57,22 +57,7 @@ class FullVigenere {
         return output;
     }
 
-    public static getEncryptionIdx(
-        currentLetter: string,
-        currentKey:string
 
-    ): number {
-  
-        return (ALPHABET.indexOf(currentLetter) + ALPHABET.indexOf(currentKey))%26;
-    }
-
-    public static getDecryptionIdx(
-        currentLetter: string,
-        currentKey:string
-    ): number {
- 
-        return (ALPHABET.indexOf(currentLetter) - ALPHABET.indexOf(currentKey))%26;
-    }
 }
 
 export default FullVigenere;

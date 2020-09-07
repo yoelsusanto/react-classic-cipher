@@ -13,6 +13,7 @@ const AppFooter: React.FC<{}> = () => {
             <div className="flex mt-4 mb-3 font-medium">
                 <p className="mr-6">Simple Vigenere Cipher</p>
                 <p className="mr-6">Full Vigenere Cipher</p>
+                <p className="mr-6">Auto-key Vigenere Cipher</p>
                 <p className="mr-6">Extended Vigenere Cipher</p>
                 <p className="mr-6">Playfair Cipher</p>
                 <p className="mr-6">Super Encryption</p>

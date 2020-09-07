@@ -10,6 +10,7 @@ import Affine from 'pages/Affine';
 import StandardVigenere from 'pages/StandardVigenere';
 import AutoVigenere from 'pages/AutoVigenere';
 import FullVigenere from 'pages/FullVigenere';
+import ExtendedVigenere from 'pages/ExtendedVigenere';
 const App: React.FC<{}> = () => {
     return (
         <div className="min-h-screen flex flex-col">
@@ -21,6 +22,7 @@ const App: React.FC<{}> = () => {
                 {/* <StandardVigenere/> */}
                 {/* <AutoVigenere/> */}
                 <FullVigenere/>
+                {/* <ExtendedVigenere/> */}
             </div>
             <AppFooter />
         </div>

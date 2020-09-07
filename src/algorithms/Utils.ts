@@ -161,8 +161,10 @@ const generateRandomAlphabet= (initkey:string,index:number)=>{
       list[randomIndex] = temporaryValue;
     }
 
-return list;
+    return list;
 }
+
+
 const ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 export {
     removeSpaces,
