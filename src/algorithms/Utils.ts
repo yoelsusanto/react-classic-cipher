@@ -62,6 +62,107 @@ const inverseModulo = (a: number, b: number): number => {
     return modulo(x, b);
 };
 
+const changeInput=(input:string):string=>{
+    const changed = input.replace(/[^a-zA-Z0-9+]/g, "").toUpperCase();
+    return changed;
+}
+const generateStandardKey = (initkey:string, updateInput:string): string => {
+    let key=changeInput(initkey);
+
+    for (let i = 1; i < updateInput.length/initkey.length-1; i += 1) {
+            
+        key += key; 
+    }
+
+    for( let i = 0 ; i < updateInput.length%initkey.length;i++){
+        key+=key[i];
+    }
+
+    return key;
+};
+
+const generateAutoKey = (initkey:string, updateInput:string): string => {
+    let key=changeInput(initkey);
+
+    if (key.length <updateInput.length){
+        var inputstr = updateInput.substr(0,updateInput.length-key.length)
+        key += inputstr
+      }
+    return key;
+};
+
+const generateFullKey = (initkey:string, updateInput:string): string => {
+    let key=changeInput(initkey);
+
+    if (key.length <updateInput.length){
+        var inputstr = updateInput.substr(0,updateInput.length-key.length)
+        key += inputstr
+      }
+    return key;
+};
+const exists= (array:string[][], keyIndex :number,alphabet:string)=> {
+    let text =""
+    
+    
+ 
+    for (var i = 0; i <array.length; i++) {
+        if (array[keyIndex][i] === alphabet){
+
+            text = ALPHABET[i]
+        }
+  }
+
+  return text
+}
+const create2DArray=(rows:number, columns:number,key:string) =>{
+    var array = new Array(rows);
+    for (var i = 0; i < rows; i++) {
+
+    array[i] = new Array(columns);
+    let list = generateRandomAlphabet(key,i);
+    for (var j = 0; j < columns; j++) {
+      
+        array[i][j] = ALPHABET[list[j]];
+        
+    }
+    }
+
+    return array;
+}
+
+const generateRandomAlphabet= (initkey:string,index:number)=>{
+    let key = initkey.toUpperCase()
+    let list = [0,1, 2, 3, 4, 5, 6, 7, 8, 9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25]
+
+    let totalIndex =0;
+    for (let i = 0 ; i < key.length;i++){
+        totalIndex+= ALPHABET.indexOf(key[i])
+        
+    }
+
+    
+    let seed = ALPHABET.length/totalIndex+index
+
+    let currentIndex = list.length, temporaryValue, randomIndex;
+    seed = seed || 1;
+    let random = function() {
+      var x = Math.sin(seed++) * 10000;
+      return x - Math.floor(x);
+    };
+ 
+    while (0 !== currentIndex) {
+   
+      randomIndex = Math.floor(random() * currentIndex);
+      currentIndex -= 1;
+  
+      temporaryValue = list[currentIndex];
+      list[currentIndex] = list[randomIndex];
+      list[randomIndex] = temporaryValue;
+    }
+
+return list;
+}
+const ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 export {
     removeSpaces,
     removeNonAlphabet,
@@ -74,4 +175,11 @@ export {
     extendedEuclidean,
     inverseModulo,
     modulo,
+    ALPHABET,
+    generateStandardKey ,
+    changeInput,
+    generateAutoKey,
+    generateFullKey,
+    exists,
+    create2DArray
 };

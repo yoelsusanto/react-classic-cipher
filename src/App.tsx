@@ -7,7 +7,9 @@ import AppFooter from 'components/AppFooter';
 import './App.css';
 import Playfair from 'pages/Playfair';
 import Affine from 'pages/Affine';
-
+import StandardVigenere from 'pages/StandardVigenere';
+import AutoVigenere from 'pages/AutoVigenere';
+import FullVigenere from 'pages/FullVigenere';
 const App: React.FC<{}> = () => {
     return (
         <div className="min-h-screen flex flex-col">
@@ -15,7 +17,10 @@ const App: React.FC<{}> = () => {
             <div className="flex-1 bg-gray-300">
                 {/* <Pipeline /> */}
                 {/* <Playfair /> */}
-                <Affine />
+                {/* <Affine /> */}
+                <StandardVigenere/>
+                {/* <AutoVigenere/> */}
+                {/* <FullVigenere/> */}
             </div>
             <AppFooter />
         </div>
