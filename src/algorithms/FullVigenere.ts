@@ -12,11 +12,11 @@ class FullVigenere {
    
         const alphabetOnly = changeInput(input)
 
-        const key = create2DArray(26,26,initKey.toUpperCase())
-    
+        const array = create2DArray(26,26,initKey.toUpperCase())
+        // console.log(key)
         let output="";
-      
-        let shift;
+        let key = initKey.toUpperCase();
+     
         let keyIndex =0;
     
      
@@ -27,7 +27,7 @@ class FullVigenere {
             let keyAlphabetIndex = ALPHABET.indexOf(key[keyIndex])
             let inputIndex = ALPHABET.indexOf(alphabetOnly[i])
             
-            let newLetter =key[keyAlphabetIndex][inputIndex];
+            let newLetter =array[keyAlphabetIndex][inputIndex];
             
             keyIndex++;
             keyIndex = keyIndex % key.length
@@ -40,17 +40,16 @@ class FullVigenere {
 
     public static decrypt(input: string, initKey: string): string {
         const alphabetOnly = changeInput(input)
-        //let key = initKey.toUpperCase()
-       // const key = generateStandardKey(initKey,alphabetOnly);
-       const key = create2DArray(26,26,initKey.toUpperCase())
+        let key = initKey.toUpperCase()
+     
+       const array = create2DArray(26,26,initKey.toUpperCase())
         let output="";
         
-        let shift;
         let keyIndex =0;
         for (let i = 0; i < alphabetOnly.length; i++) {
             let currentLetter = alphabetOnly[i];
             let keyAlphabetIndex = ALPHABET.indexOf(key[keyIndex])
-           output+=exists(key,keyAlphabetIndex,currentLetter);
+           output+=exists(array,keyAlphabetIndex,currentLetter);
             keyIndex++;
             keyIndex = keyIndex % key.length
             

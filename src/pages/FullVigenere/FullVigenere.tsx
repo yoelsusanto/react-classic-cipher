@@ -16,10 +16,14 @@ const Full: React.FC<{}> = () => {
 
     useEffect(() => {
         let result;
-        if (mode === 'ENCRYPT') {
-            result = FullVigenere.encrypt(input, key);
-        } else {
-            result = FullVigenere.decrypt(input, key);
+        if(key !== "" && input!==""){
+            if (mode === 'ENCRYPT') {
+                result = FullVigenere.encrypt(input, key);
+            } else {
+                result = FullVigenere.decrypt(input, key);
+            }
+        }else {
+            result='';
         }
         setOutput(result);
     }, [input, mode, key]);

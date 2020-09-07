@@ -18,9 +18,9 @@ const App: React.FC<{}> = () => {
                 {/* <Pipeline /> */}
                 {/* <Playfair /> */}
                 {/* <Affine /> */}
-                <StandardVigenere/>
+                {/* <StandardVigenere/> */}
                 {/* <AutoVigenere/> */}
-                {/* <FullVigenere/> */}
+                <FullVigenere/>
             </div>
             <AppFooter />
         </div>

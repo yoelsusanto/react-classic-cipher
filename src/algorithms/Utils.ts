@@ -120,6 +120,7 @@ const create2DArray=(rows:number, columns:number,key:string) =>{
 
     array[i] = new Array(columns);
     let list = generateRandomAlphabet(key,i);
+    //console.log(list)
     for (var j = 0; j < columns; j++) {
       
         array[i][j] = ALPHABET[list[j]];
