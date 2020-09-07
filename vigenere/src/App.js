@@ -81,13 +81,16 @@ class App extends Component {
 
   encode() {
     let output;
-
+   
      if (this.state.choosen.value === AUTO ){
 
        output = Vigenere.vigenereAuto(this.state.input,this.state.key,ENCODE);
      } else if(this.state.choosen.value === STANDARD ){
       output = Vigenere.vigenereStandard(this.state.input,this.state.key,ENCODE);
-     } else {
+     } else if(this.state.choosen.value === FULL){
+      output = Vigenere.fullVigenere(this.state.input,this.state.key,ENCODE);
+     }
+     else {
       output = Vigenere.extendedVigenere(this.state.input,this.state.key,ENCODE);
      }
 
@@ -104,7 +107,10 @@ class App extends Component {
        output = Vigenere.vigenereAuto(this.state.input,this.state.key,DECODE);
      } else if(this.state.choosen.value === STANDARD ){
       output = Vigenere.vigenereStandard(this.state.input,this.state.key,DECODE);
-     } else {
+     } else if(this.state.choosen.value === FULL){
+      output = Vigenere.fullVigenere(this.state.input,this.state.key,DECODE);
+     }
+     else {
       output = Vigenere.extendedVigenere(this.state.input,this.state.key,DECODE);
      }
      
