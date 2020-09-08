@@ -28,7 +28,8 @@ const App: React.FC<{}> = () => {
                 {/* <FullVigenere /> */}
                 {/* <ExtendedVigenere/> */}
                 {/* <SuperEcryption /> */}
-                <HillCipher />
+                {/* <HillCipher /> */}
+                <Playfair />
             </div>
             <AppFooter />
         </div>
