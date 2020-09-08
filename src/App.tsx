@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React from 'react';
 
 import AppHeader from 'components/AppHeader';
@@ -11,6 +12,8 @@ import StandardVigenere from 'pages/StandardVigenere';
 import AutoVigenere from 'pages/AutoVigenere';
 import FullVigenere from 'pages/FullVigenere';
 import ExtendedVigenere from 'pages/ExtendedVigenere';
+import SuperEcryption from 'pages/SuperChiper';
+
 const App: React.FC<{}> = () => {
     return (
         <div className="min-h-screen flex flex-col">
@@ -21,8 +24,9 @@ const App: React.FC<{}> = () => {
                 {/* <Affine /> */}
                 {/* <StandardVigenere/> */}
                 {/* <AutoVigenere/> */}
-                <FullVigenere/>
+                {/* <FullVigenere /> */}
                 {/* <ExtendedVigenere/> */}
+                <SuperEcryption />
             </div>
             <AppFooter />
         </div>
