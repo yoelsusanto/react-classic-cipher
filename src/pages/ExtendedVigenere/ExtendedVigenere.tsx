@@ -3,9 +3,10 @@ import ExtendedVigenere from 'algorithms/ExtendedVigenere';
 
 import TextView from 'components/TextView';
 import TextOutput from 'components/TextOutput';
-import TextOption from 'components/TextOption';
+import TextOption from 'components/Configurations/TextOption';
 
 import KeyInput from 'components/KeyInput';
+
 const options = ['ENCRYPT', 'DECRYPT'];
 
 const Extended: React.FC<undefined> = () => {
@@ -14,11 +15,10 @@ const Extended: React.FC<undefined> = () => {
     const [output, setOutput] = useState('');
     const [mode, setMode] = useState(options[0]);
     const [key, setKey] = useState('test');
-  
+
     useEffect(() => {
         let result;
-        
-        
+
         if (mode === 'ENCRYPT') {
             result = ExtendedVigenere.encrypt(input, key);
         } else {
@@ -26,27 +26,27 @@ const Extended: React.FC<undefined> = () => {
         }
         setOutput(result);
     }, [input, mode, key]);
-    
-   const handleFileRead = (_e: any) =>{
-            const content = fileReader.result;
-            console.log(content);
-        }
-    
-        const handleFileChosen = (file: Blob) =>{
-            fileReader = new FileReader();
-            fileReader.onloadend = handleFileRead;
-            fileReader.readAsText(file);
-        }
+
+    const handleFileRead = (_e: any) => {
+        const content = fileReader.result;
+        console.log(content);
+    };
+
+    const handleFileChosen = (file: Blob) => {
+        fileReader = new FileReader();
+        fileReader.onloadend = handleFileRead;
+        fileReader.readAsText(file);
+    };
     return (
         <div className="w-4/5 m-auto py-10 flex justify-between">
-            <div className ='upload-expense'>
-                <input type ='file'
-                    id ='file'
-                    className = 'input-file'
-                    accept='.txt'
-                   //onChange={e => handleFileChosen(e.target.files[0])}
-                    />
-                    </div>
+            <div className="upload-expense">
+                <input
+                    type="file"
+                    id="file"
+                    className="input-file"
+                    accept=".txt"
+                />
+            </div>
 
             <div className="w-1/4 bg-white rounded-sm shadow-sm">
                 <div className="p-4 border-b">
@@ -58,8 +58,7 @@ const Extended: React.FC<undefined> = () => {
                     />
                 </div>
                 <div className="row">
-                <KeyInput onChange={setKey} />
-                   
+                    <KeyInput onChange={setKey} />
                 </div>
             </div>
             <TextOutput value={output} />

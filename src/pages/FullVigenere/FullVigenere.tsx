@@ -3,9 +3,10 @@ import FullVigenere from 'algorithms/FullVigenere';
 
 import TextView from 'components/TextView';
 import TextOutput from 'components/TextOutput';
-import TextOption from 'components/TextOption';
+import TextOption from 'components/Configurations/TextOption';
 
 import KeyInput from 'components/KeyInput';
+
 const options = ['ENCRYPT', 'DECRYPT'];
 
 const Full: React.FC<{}> = () => {
@@ -16,18 +17,17 @@ const Full: React.FC<{}> = () => {
 
     useEffect(() => {
         let result;
-        if(key !== "" && input!==""){
+        if (key !== '' && input !== '') {
             if (mode === 'ENCRYPT') {
                 result = FullVigenere.encrypt(input, key);
             } else {
                 result = FullVigenere.decrypt(input, key);
             }
-        }else {
-            result='';
+        } else {
+            result = '';
         }
         setOutput(result);
     }, [input, mode, key]);
-    
 
     return (
         <div className="w-4/5 m-auto py-10 flex justify-between">
@@ -41,12 +41,10 @@ const Full: React.FC<{}> = () => {
                             setMode(newOption);
                         }}
                     />
-                    
                 </div>
-           
+
                 <div className="flex">
                     <KeyInput onChange={setKey} />
-                   
                 </div>
             </div>
             <TextOutput value={output} />

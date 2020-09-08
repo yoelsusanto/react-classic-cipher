@@ -3,9 +3,10 @@ import AutoVigenere from 'algorithms/AutoVigenere';
 
 import TextView from 'components/TextView';
 import TextOutput from 'components/TextOutput';
-import TextOption from 'components/TextOption';
+import TextOption from 'components/Configurations/TextOption';
 
 import KeyInput from 'components/KeyInput';
+
 const options = ['ENCRYPT', 'DECRYPT'];
 
 const Auto: React.FC<{}> = () => {
@@ -23,7 +24,6 @@ const Auto: React.FC<{}> = () => {
         }
         setOutput(result);
     }, [input, mode, key]);
-    
 
     return (
         <div className="w-4/5 m-auto py-10 flex justify-between">
@@ -39,8 +39,7 @@ const Auto: React.FC<{}> = () => {
                     />
                 </div>
                 <div className="row">
-                <KeyInput onChange={setKey} />
-                   
+                    <KeyInput onChange={setKey} />
                 </div>
             </div>
             <TextOutput value={output} />
