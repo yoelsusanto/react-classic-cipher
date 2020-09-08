@@ -13,6 +13,7 @@ import AutoVigenere from 'pages/AutoVigenere';
 import FullVigenere from 'pages/FullVigenere';
 import ExtendedVigenere from 'pages/ExtendedVigenere';
 import SuperEcryption from 'pages/SuperChiper';
+import HillCipher from 'pages/Hillcipher';
 
 const App: React.FC<{}> = () => {
     return (
@@ -26,7 +27,8 @@ const App: React.FC<{}> = () => {
                 {/* <AutoVigenere/> */}
                 {/* <FullVigenere /> */}
                 {/* <ExtendedVigenere/> */}
-                <SuperEcryption />
+                {/* <SuperEcryption /> */}
+                <HillCipher />
             </div>
             <AppFooter />
         </div>
