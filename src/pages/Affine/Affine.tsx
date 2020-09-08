@@ -3,7 +3,7 @@ import AffineCipher from 'algorithms/Affine';
 
 import TextView from 'components/TextView';
 import TextOutput from 'components/TextOutput';
-import TextOption from 'components/TextOption';
+import TextOption from 'components/Configurations/TextOption';
 import NumberInput from 'components/NumberInput';
 
 const options = ['ENCRYPT', 'DECRYPT'];
