@@ -199,7 +199,7 @@ const transposeChiper = (chiper: string, key: string): string => {
     const finalKey = reverseKey[0] + key[0];
     const total = totalIndexString(finalKey, key.length % 2);
 
-    let seed = Math.round(total / 26)+1;
+    let seed = Math.round(total / 26) + 1;
     const fixSeed = seed;
     let prevSeed = seed;
     const finalChipher = ch;
@@ -238,12 +238,12 @@ const retransposeChiper = (chiper: string, key: string): string => {
     const finalKey = reverseKey[0] + key[0];
     const total = totalIndexString(finalKey, key.length % 2);
 
-    let seed = Math.round(total / 26) + 1;
+    const seed = Math.round(total / 26) + 1;
     console.log(seed);
-    let prevSeed = seed;
+    const prevSeed = seed;
 
     const chiperRetranspose: string[] = new Array(cleanChipher.length).fill('');
-    let breakPoint = (cleanChipher.length / seed)-1;
+    let breakPoint = cleanChipher.length / seed - 1;
     console.log(breakPoint);
     let initial = 0;
     for (let i = cleanChipher.length - 1; i >= 0; i -= 1) {

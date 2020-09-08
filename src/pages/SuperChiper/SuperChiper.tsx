@@ -3,7 +3,7 @@ import SuperEncryption from 'algorithms/SuperEncryption';
 
 import TextView from 'components/TextView';
 import TextOutput from 'components/TextOutput';
-import TextOption from 'components/TextOption';
+import TextOption from 'components/Configurations/TextOption';
 import KeyInput from 'components/KeyInput';
 
 const options = ['ENCRYPT', 'DECRYPT'];
