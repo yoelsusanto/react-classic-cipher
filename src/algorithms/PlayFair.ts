@@ -13,6 +13,11 @@ import {
     |20|21|22|23|24|
 */
 
+interface IPlayfairTable {
+    map: Map<string, number>;
+    array: string[];
+}
+
 class PlayFairChiper {
     static ACharCode = 97;
 
@@ -20,10 +25,176 @@ class PlayFairChiper {
         const withoutSpaces = removeSpaces(plainText);
         const alphabetOnly = removeNonAlphabet(withoutSpaces);
 
-        const table = this.createPlayFairTable(cipherKey);
-        const arrayOfTwo = this.separateIntoChunksOfTwo(plainText);
+        const jReplaced = alphabetOnly.replace('j', 'i');
+        let paddedWithX = '';
+        for (let i = 0; i < jReplaced.length; i += 1) {
+            if (i > 0 && jReplaced[i] === jReplaced[i - 1] && i % 2 === 0) {
+                paddedWithX = paddedWithX.concat('x');
+            }
+            paddedWithX = paddedWithX.concat(jReplaced[i]);
+        }
 
-        return alphabetOnly;
+        const table = this.createPlayFairTable(cipherKey);
+        const arrayOfCharPair = this.separateIntoChunksOfTwo(paddedWithX);
+
+        const encryptedCharArray = arrayOfCharPair.map((charPair) =>
+            this.encryptPair(charPair, table),
+        );
+
+        return encryptedCharArray.join('');
+    }
+
+    public static decrypt(plainText: string, cipherKey: string): string {
+        const withoutSpaces = removeSpaces(plainText);
+        const alphabetOnly = removeNonAlphabet(withoutSpaces);
+
+        const jReplaced = alphabetOnly.replace('j', 'i');
+        let paddedWithX = '';
+        for (let i = 0; i < jReplaced.length; i += 1) {
+            if (i > 0 && jReplaced[i] === jReplaced[i - 1] && i % 2 === 0) {
+                paddedWithX = paddedWithX.concat('x');
+            }
+            paddedWithX = paddedWithX.concat(jReplaced[i]);
+        }
+
+        const table = this.createPlayFairTable(cipherKey);
+        const arrayOfCharPair = this.separateIntoChunksOfTwo(paddedWithX);
+
+        const decryptedCharArray = arrayOfCharPair.map((charPair) =>
+            this.decryptPair(charPair, table),
+        );
+
+        return decryptedCharArray.join('');
+    }
+
+    public static encryptPair(
+        charPair: string[],
+        table: IPlayfairTable,
+    ): string {
+        const charIndexPair = charPair.map((char) => table.map.get(char)!);
+        const encryptedCharIdxPair = this.encryptIndex(charIndexPair);
+        const encryptedChar = encryptedCharIdxPair.map(
+            (charIdx) => table.array[charIdx],
+        );
+        return encryptedChar.join('');
+    }
+
+    public static decryptPair(
+        charPair: string[],
+        table: IPlayfairTable,
+    ): string {
+        const charIndexPair = charPair.map((char) => table.map.get(char)!);
+        const decryptedCharIdxPair = this.decryptIndex(charIndexPair);
+        const decryptedChar = decryptedCharIdxPair.map(
+            (charIdx) => table.array[charIdx],
+        );
+        return decryptedChar.join('');
+    }
+
+    public static encryptIndex(idxPair: number[]): number[] {
+        const firstCharIdx = idxPair[0];
+        const secondCharIdx = idxPair[1];
+        const firstCharRow = this.getCharRowFromCharIdx(firstCharIdx);
+        const firstCharColumn = this.getCharColumnFromCharIdx(firstCharIdx);
+        const secondCharRow = this.getCharRowFromCharIdx(secondCharIdx);
+        const secondCharColumn = this.getCharColumnFromCharIdx(secondCharIdx);
+        const sameColumn = firstCharColumn === secondCharColumn;
+        const sameRow = firstCharRow === secondCharRow;
+        if (sameColumn) {
+            return idxPair.map((charIdx) => this.processSameColumn(charIdx));
+        }
+        if (sameRow) {
+            return idxPair.map((charIdx) => this.processSameRow(charIdx));
+        }
+        if (sameColumn && sameRow) {
+            throw new Error('Same char and same row wtf??');
+        }
+        // Not same row and same char, so need to do some switching
+        let horizontalDiff = (firstCharIdx % 5) - (secondCharIdx % 5);
+        const firstCharLeftOfSecond = horizontalDiff < 0;
+        horizontalDiff = Math.abs(horizontalDiff);
+        if (firstCharLeftOfSecond) {
+            return [
+                firstCharIdx + horizontalDiff,
+                secondCharIdx - horizontalDiff,
+            ];
+        }
+        return [firstCharIdx - horizontalDiff, secondCharIdx + horizontalDiff];
+    }
+
+    public static decryptIndex(idxPair: number[]): number[] {
+        const firstCharIdx = idxPair[0];
+        const secondCharIdx = idxPair[1];
+        const firstCharRow = this.getCharRowFromCharIdx(firstCharIdx);
+        const firstCharColumn = this.getCharColumnFromCharIdx(firstCharIdx);
+        const secondCharRow = this.getCharRowFromCharIdx(secondCharIdx);
+        const secondCharColumn = this.getCharColumnFromCharIdx(secondCharIdx);
+        const sameColumn = firstCharColumn === secondCharColumn;
+        const sameRow = firstCharRow === secondCharRow;
+        if (sameColumn) {
+            return idxPair.map((charIdx) =>
+                this.processSameColumn(charIdx, true),
+            );
+        }
+        if (sameRow) {
+            return idxPair.map((charIdx) => this.processSameRow(charIdx, true));
+        }
+        if (sameColumn && sameRow) {
+            throw new Error('Same char and same row wtf??');
+        }
+        // Not same row and same char, so need to do some switching
+        let horizontalDiff = (firstCharIdx % 5) - (secondCharIdx % 5);
+        const firstCharLeftOfSecond = horizontalDiff < 0;
+        horizontalDiff = Math.abs(horizontalDiff);
+        if (firstCharLeftOfSecond) {
+            return [
+                firstCharIdx + horizontalDiff,
+                secondCharIdx - horizontalDiff,
+            ];
+        }
+        return [firstCharIdx - horizontalDiff, secondCharIdx + horizontalDiff];
+    }
+
+    public static processSameColumn(
+        charIdx: number,
+        decryption = false,
+    ): number {
+        if (decryption) {
+            const onHighestRow = charIdx <= 4;
+            if (!onHighestRow) {
+                return charIdx - 5;
+            }
+            return charIdx + 20;
+        }
+        const onLowestRow = charIdx >= 20;
+        if (!onLowestRow) {
+            return charIdx + 5;
+        }
+        return charIdx - 20;
+    }
+
+    public static processSameRow(charIdx: number, decryption = false): number {
+        // if decryption
+        if (decryption) {
+            const onLeftestColumn = charIdx % 5 === 0;
+            if (!onLeftestColumn) {
+                return charIdx - 1;
+            }
+            return charIdx + 4;
+        }
+        const onRightestColumn = charIdx % 5 === 4;
+        if (!onRightestColumn) {
+            return charIdx + 1;
+        }
+        return charIdx - 4;
+    }
+
+    public static getCharRowFromCharIdx(charIdx: number): number {
+        return Math.floor(charIdx / 5);
+    }
+
+    public static getCharColumnFromCharIdx(charIdx: number): number {
+        return charIdx % 5;
     }
 
     private static generateAlphabetSet(): Set<string> {
@@ -35,9 +206,7 @@ class PlayFairChiper {
         return alphabetSet;
     }
 
-    public static createPlayFairTable(
-        cipherKey: string,
-    ): { map: Map<string, number>; array: string[] } {
+    public static createPlayFairTable(cipherKey: string): IPlayfairTable {
         // Clean cipherKey first
         const keyWithoutSpace = removeSpaces(cipherKey);
         const alphabetOnly = removeNonAlphabet(keyWithoutSpace);
@@ -62,6 +231,7 @@ class PlayFairChiper {
         }
 
         const tableArray = Array.from(tableMap.keys());
+        tableMap.set('j', tableMap.get('i')!);
 
         return { map: tableMap, array: tableArray };
     }
