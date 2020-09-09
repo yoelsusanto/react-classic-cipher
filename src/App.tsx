@@ -21,7 +21,7 @@ const App: React.FC<{}> = () => {
             <AppHeader />
             <div className="flex-1 bg-gray-300">
                 {/* <Pipeline /> */}
-                {/* <Playfair /> */}
+                <Playfair />
                 {/* <Affine /> */}
                 {/* <StandardVigenere/> */}
                 {/* <AutoVigenere/> */}
@@ -29,7 +29,7 @@ const App: React.FC<{}> = () => {
                 {/* <ExtendedVigenere/> */}
                 {/* <SuperEcryption /> */}
                 {/* <HillCipher /> */}
-                <Playfair />
+                {/* <Playfair /> */}
             </div>
             <AppFooter />
         </div>

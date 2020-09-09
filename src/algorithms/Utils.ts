@@ -72,16 +72,19 @@ const changeInput = (input: string): string => {
     return changed;
 };
 const generateStandardKey = (initkey: string, updateInput: string): string => {
-    let key = changeInput(initkey);
-
-    for (let i = 1; i < updateInput.length / initkey.length - 1; i += 1) {
-        key += key;
+    let key = '';
+    let keyFixed = changeInput(initkey);
+    const removedDecimal = Math.trunc(updateInput.length / keyFixed.length);
+   // console.log(removedDecimal);
+    for (let i = 0; i < removedDecimal; i += 1) {
+        key += keyFixed;
     }
-
-    for (let i = 0; i < updateInput.length % initkey.length; i += 1) {
-        key += key[i];
+    //console.log(key)
+    for (let i = 0; i < updateInput.length  - (removedDecimal * keyFixed.length); i += 1) {
+        console.log(' a ' ,keyFixed[i])
+        key += keyFixed[i];
     }
-
+   // console.log(key)
     return key;
 };
 
@@ -200,6 +203,7 @@ const transposeChiper = (chiper: string, key: string): string => {
     const total = totalIndexString(finalKey, key.length % 2);
 
     let seed = Math.round(total / 26) + 1;
+    console.log(seed);
     const fixSeed = seed;
     let prevSeed = seed;
     const finalChipher = ch;
