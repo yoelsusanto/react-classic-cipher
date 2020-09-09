@@ -34,6 +34,9 @@ const Full: React.FC<{}> = () => {
             <TextView onChange={setInput} />
 
             <div className="w-1/4 bg-white rounded-sm shadow-sm">
+                <div className="p-4 border-b text-center text-teal-500 text-xl font-bold">
+                    Full Vigenere
+                </div>
                 <div className="p-4 border-b">
                     <TextOption
                         options={options}
