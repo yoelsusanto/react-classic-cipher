@@ -82,21 +82,26 @@ const Extended: React.FC<undefined> = () => {
     };
 
     const handleFilesBytes = async (file: File): Promise<void> => {
-        let result: Uint8Array;
+        let result: any;
         const link = document.createElement('a');
         const { name, type: fileType } = file;
-
+        const buffer = await file.arrayBuffer();
+        const inputBytes = new Uint8Array(buffer);
+        console.log(fileType);
         if (mode === 'ENCRYPT') {
-            const buffer = await file.arrayBuffer();
-            const inputBytes = new Uint8Array(buffer);
-
-            result = ExtendedVigenere.encryptBuffer(inputBytes, key);
-        } else {
-            const buffer = await file.arrayBuffer();
-            const inputBytes = new Uint8Array(buffer);
-
-            result = ExtendedVigenere.decryptBuffer(inputBytes, key);
+            if (fileType === 'text/plain') {
+                result = ExtendedVigenere.encryptTextFile(inputBytes, key);
+            } else {
+                result = ExtendedVigenere.encryptBuffer(inputBytes, key);
+            }
+        } else if (mode === 'DECRYPT') {
+            if (fileType === 'text/plain') {
+                result = ExtendedVigenere.decryptTextFile(inputBytes, key);
+            } else {
+                result = ExtendedVigenere.decryptBuffer(inputBytes, key);
+            }
         }
+
         link.download = name;
         const blob = new Blob([result!], { type: fileType });
         link.href = window.URL.createObjectURL(blob);

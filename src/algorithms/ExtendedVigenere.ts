@@ -91,6 +91,60 @@ class ExtendedVigenere {
         }
         return output;
     }
+
+    public static encryptTextFile(
+        funcInput: Uint8Array,
+        initKey: string,
+    ): string {
+        const input = funcInput;
+        const inputString = new TextDecoder().decode(input);
+        let output = '';
+
+        let shift;
+        let keyIndex = 0;
+
+        for (let i = 0; i < inputString.length; i += 1) {
+            const currentLetter = inputString[i];
+
+            keyIndex += i;
+            keyIndex %= initKey.length;
+
+            shift = initKey.charCodeAt(keyIndex) - 97;
+
+            const currentIndex = (currentLetter.charCodeAt(0) + shift) % 256;
+
+            const newLetter = String.fromCharCode(currentIndex);
+            output += newLetter;
+        }
+        return output;
+    }
+
+    public static decryptTextFile(
+        funcInput: Uint8Array,
+        initKey: string,
+    ): string {
+        const input = funcInput;
+        const inputString = new TextDecoder().decode(input);
+        let output = '';
+
+        let shift;
+        let keyIndex = 0;
+
+        for (let i = 0; i < inputString.length; i += 1) {
+            const currentLetter = inputString[i];
+
+            keyIndex += i;
+            keyIndex %= initKey.length;
+
+            shift = initKey.charCodeAt(keyIndex) - 97;
+
+            const currentIndex = (currentLetter.charCodeAt(0) - shift) % 256;
+
+            const newLetter = String.fromCharCode(currentIndex);
+            output += newLetter;
+        }
+        return output;
+    }
 }
 
 export default ExtendedVigenere;
