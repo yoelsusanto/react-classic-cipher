@@ -14,6 +14,7 @@ import FullVigenere from 'pages/FullVigenere';
 import ExtendedVigenere from 'pages/ExtendedVigenere';
 import SuperEncryption from 'pages/SuperChiper';
 import HillCipher from 'pages/Hillcipher';
+import Enigma from 'pages/Enigma';
 
 const App: React.FC<{}> = () => {
     return (
@@ -42,6 +43,7 @@ const App: React.FC<{}> = () => {
                         component={SuperEncryption}
                     />
                     <Route path="/hillcipher" component={HillCipher} />
+                    <Route path="/enigma" component={Enigma} />
                 </div>
                 <AppFooter />
             </BrowserRouter>
