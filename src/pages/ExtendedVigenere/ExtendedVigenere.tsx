@@ -1,14 +1,10 @@
 /* eslint-disable prefer-destructuring */
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import ExtendedVigenere from 'algorithms/ExtendedVigenere';
-
 
 import TextOption from 'components/Configurations/TextOption';
 
 import KeyInput from 'components/KeyInput';
-import ReactFileReader from 'react-file-reader';
-import TextView from 'components/TextView';
-import TextOutput from 'components/TextOutput';
 
 const options = ['ENCRYPT', 'DECRYPT'];
 
@@ -42,22 +38,9 @@ function dataURItoBlob(dataURI: string) {
 }
 
 const Extended: React.FC<undefined> = () => {
-    const [input, setInput] = useState('');
-    const [output, setOutput] = useState('');
     const [mode, setMode] = useState(options[0]);
     const [key, setKey] = useState('');
-    
-    useEffect(() => {
-        let result = '';
-        if (key !== '') {
-            if (mode === 'ENCRYPT') {
-                result = ExtendedVigenere.encrypt(input, key);
-            } else {
-                result = ExtendedVigenere.decrypt(input, key);
-            }
-        }
-        setOutput(result);
-    }, [input, mode, key]);
+
     const handleFiles = (files: { base64: any }) => {
         let result: string;
         const link = document.createElement('a');
@@ -82,26 +65,56 @@ const Extended: React.FC<undefined> = () => {
         link.click();
     };
 
+    const handleFilesBytes = async (file: File): Promise<void> => {
+        let result: Uint8Array;
+        const link = document.createElement('a');
+        const { name, type: fileType } = file;
+
+        if (mode === 'ENCRYPT') {
+            const buffer = await file.arrayBuffer();
+            const inputBytes = new Uint8Array(buffer);
+
+            result = ExtendedVigenere.encryptBuffer(inputBytes, key);
+        } else {
+            const buffer = await file.arrayBuffer();
+            const inputBytes = new Uint8Array(buffer);
+
+            result = ExtendedVigenere.decryptBuffer(inputBytes, key);
+        }
+        link.download = name;
+        const blob = new Blob([result!], { type: fileType });
+        link.href = window.URL.createObjectURL(blob);
+        link.click();
+    };
+
     return (
         <div className="w-4/5 m-auto py-10 flex justify-between">
-            <ReactFileReader
-                fileTypes={['.txt']}
-                handleFiles={handleFiles}
-                base64
-            >
-                <button
-                    className="text-teal-500 text-base outline-none"
-                    type="button"
-                >
-                    Upload
-                </button>
-            </ReactFileReader>
-            <TextView onChange={setInput} />
+            <div className="flex flex-col">
+                <input
+                    value=""
+                    type="file"
+                    onChange={(e): void => {
+                        e.preventDefault();
+                        const file = e.target?.files![0];
+                        if (!file) {
+                            return;
+                        }
+                        handleFilesBytes(file);
+                    }}
+                    disabled={key.length === 0}
+                />
+                {key.length === 0 && (
+                    <div className="p-4 border-b text-red-700">
+                        Please specify your key
+                    </div>
+                )}
+            </div>
+
             <div className="w-1/4 bg-white rounded-sm shadow-sm">
                 <div className="p-4 border-b text-center text-teal-500 text-xl font-bold">
                     Extended Vigenere
                 </div>
-               
+
                 <div className="p-4 border-b">
                     <TextOption
                         options={options}
@@ -113,9 +126,7 @@ const Extended: React.FC<undefined> = () => {
                 <div className="row">
                     <KeyInput onChange={setKey} />
                 </div>
-                
             </div>
-            <TextOutput value={output} />
         </div>
     );
 };
