@@ -1,3 +1,4 @@
+import { mod } from 'mathjs';
 import {
     getCharFromCharIdx,
     getCharIdx,
@@ -14,7 +15,7 @@ class AffineCipher {
         );
         const encryptedChars = [];
         for (let i = 0; i < alphabetOnly.length; i += 1) {
-            const charIdx = getCharIdx(plainText[i]);
+            const charIdx = getCharIdx(alphabetOnly[i]);
             const replacementCharIdx = this.getEncryptionIdx(charIdx, a, b);
             const replacementChar = getCharFromCharIdx(replacementCharIdx);
             encryptedChars.push(replacementChar);
@@ -26,6 +27,7 @@ class AffineCipher {
         const alphabetOnly = removeNonAlphabet(
             removeSpaces(cipherText.toLowerCase()),
         );
+
         const decryptedChars = [];
         for (let i = 0; i < alphabetOnly.length; i += 1) {
             const charIdx = getCharIdx(cipherText[i]);
@@ -41,7 +43,7 @@ class AffineCipher {
         a: number,
         b: number,
     ): number {
-        return (a * charIdx + b) % 26;
+        return mod(a * charIdx + b, 26);
     }
 
     public static getDecryptionIdx(
