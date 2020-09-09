@@ -67,24 +67,31 @@ const inverseModulo = (a: number, b: number): number => {
     return modulo(x, b);
 };
 
+const arrayHasNoDuplicate = (arr: any[]): boolean => {
+    return new Set(arr).size === arr.length;
+};
+
 const changeInput = (input: string): string => {
     const changed = input.replace(/[^a-zA-Z0-9+]/g, '').toUpperCase();
     return changed;
 };
 const generateStandardKey = (initkey: string, updateInput: string): string => {
     let key = '';
-    let keyFixed = changeInput(initkey);
+    const keyFixed = changeInput(initkey);
     const removedDecimal = Math.trunc(updateInput.length / keyFixed.length);
-   // console.log(removedDecimal);
+    // console.log(removedDecimal);
     for (let i = 0; i < removedDecimal; i += 1) {
         key += keyFixed;
     }
-    //console.log(key)
-    for (let i = 0; i < updateInput.length  - (removedDecimal * keyFixed.length); i += 1) {
-      
+    // console.log(key)
+    for (
+        let i = 0;
+        i < updateInput.length - removedDecimal * keyFixed.length;
+        i += 1
+    ) {
         key += keyFixed[i];
     }
-   // console.log(key)
+    // console.log(key)
     return key;
 };
 
@@ -240,32 +247,28 @@ const retransposeChiper = (chiper: string, key: string): string => {
     const total = totalIndexString(finalKey, key.length % 2);
 
     const seed = Math.round(total / 26) + 1;
-  
-   
 
     const chiperRetranspose: string[] = new Array(cleanChipher.length).fill('');
-    let breakPoint=0;
-    if (cleanChipher.length % seed === 0){
+    let breakPoint = 0;
+    if (cleanChipher.length % seed === 0) {
         breakPoint = cleanChipher.length / seed;
     } else {
         breakPoint = Math.trunc(cleanChipher.length / seed) + 1;
     }
 
     let initial = cleanChipher.length - 1;
-    for (let i = 0 ; i < breakPoint; i += 1) {
-
+    for (let i = 0; i < breakPoint; i += 1) {
         chiperRetranspose[initial] += cleanChipher[i];
         initial -=seed ;
 
     }
     initial = cleanChipher.length - 2;
     for (let i = breakPoint; i < cleanChipher.length; i += 1) {
-
         chiperRetranspose[initial] += cleanChipher[i];
         initial -=seed ;
     
     }
-   
+
     return chiperRetranspose.join('');
 };
 const ALPHABET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -281,6 +284,7 @@ export {
     extendedEuclidean,
     inverseModulo,
     modulo,
+    arrayHasNoDuplicate,
     ALPHABET,
     generateStandardKey,
     changeInput,
