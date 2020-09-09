@@ -1,9 +1,8 @@
 /* eslint-disable prefer-destructuring */
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import ExtendedVigenere from 'algorithms/ExtendedVigenere';
 
-import TextView from 'components/TextView';
-import TextOutput from 'components/TextOutput';
+
 import TextOption from 'components/Configurations/TextOption';
 
 import KeyInput from 'components/KeyInput';
@@ -41,8 +40,7 @@ function dataURItoBlob(dataURI: string) {
 }
 
 const Extended: React.FC<undefined> = () => {
-    const [input, setInput] = useState('');
-    const [output, setOutput] = useState('');
+
     const [mode, setMode] = useState(options[0]);
     const [key, setKey] = useState('');
 

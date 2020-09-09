@@ -17,10 +17,14 @@ const Standard: React.FC<{}> = () => {
 
     useEffect(() => {
         let result;
-        if (mode === 'ENCRYPT') {
-            result = StandardVigenere.encrypt(input, key);
+        if (key !== '') {
+            if (mode === 'ENCRYPT') {
+                result = StandardVigenere.encrypt(input, key);
+            } else {
+                result = StandardVigenere.decrypt(input, key);
+            }
         } else {
-            result = StandardVigenere.decrypt(input, key);
+            result = '';
         }
         setOutput(result);
     }, [input, mode, key]);
