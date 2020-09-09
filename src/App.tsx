@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React from 'react';
+import { Redirect, Route, BrowserRouter } from 'react-router-dom';
 
 import AppHeader from 'components/AppHeader';
-import Pipeline from 'pages/Pipeline';
 import AppFooter from 'components/AppFooter';
 
 import './App.css';
@@ -12,26 +12,39 @@ import StandardVigenere from 'pages/StandardVigenere';
 import AutoVigenere from 'pages/AutoVigenere';
 import FullVigenere from 'pages/FullVigenere';
 import ExtendedVigenere from 'pages/ExtendedVigenere';
-import SuperEcryption from 'pages/SuperChiper';
+import SuperEncryption from 'pages/SuperChiper';
 import HillCipher from 'pages/Hillcipher';
 
 const App: React.FC<{}> = () => {
     return (
         <div className="min-h-screen flex flex-col">
-            <AppHeader />
-            <div className="flex-1 bg-gray-300">
-                {/* <Pipeline /> */}
-                {/* <Playfair /> */}
-                {/* <Affine /> */}
-                {/* <StandardVigenere/> */}
-                {/* <AutoVigenere/> */}
-                {/* <FullVigenere /> */}
-                {/* <ExtendedVigenere/> */}
-                {/* <SuperEcryption /> */}
-                {/* <HillCipher /> */}
-                <Playfair />
-            </div>
-            <AppFooter />
+            <BrowserRouter>
+                <AppHeader />
+                <div className="flex-1 bg-gray-300">
+                    <Route
+                        path="/"
+                        component={(): any => <Redirect to="/affine" />}
+                    />
+                    <Route path="/playfair" component={Playfair} />
+                    <Route path="/affine" component={Affine} />
+                    <Route
+                        path="/standardvigenere"
+                        component={StandardVigenere}
+                    />
+                    <Route path="/autovigenere" component={AutoVigenere} />
+                    <Route path="/fullvigenere" component={FullVigenere} />
+                    <Route
+                        path="/extendedvigenere"
+                        component={ExtendedVigenere}
+                    />
+                    <Route
+                        path="/superencryption"
+                        component={SuperEncryption}
+                    />
+                    <Route path="/hillcipher" component={HillCipher} />
+                </div>
+                <AppFooter />
+            </BrowserRouter>
         </div>
     );
 };
