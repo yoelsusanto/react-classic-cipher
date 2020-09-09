@@ -84,6 +84,9 @@ const Extended: React.FC<undefined> = () => {
             </ReactFileReader>
 
             <div className="w-1/4 bg-white rounded-sm shadow-sm">
+                <div className="p-4 border-b text-center text-teal-500 text-xl font-bold">
+                    Extended Vigenere
+                </div>
                 <div className="p-4 border-b">
                     <TextOption
                         options={options}
