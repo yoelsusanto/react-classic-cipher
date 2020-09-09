@@ -1,10 +1,12 @@
 /* eslint-disable prefer-destructuring */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ExtendedVigenere from 'algorithms/ExtendedVigenere';
 
 import TextOption from 'components/Configurations/TextOption';
 
 import KeyInput from 'components/KeyInput';
+import TextView from 'components/TextView/TextView';
+import TextOutput from 'components/TextOutput';
 
 const options = ['ENCRYPT', 'DECRYPT'];
 
@@ -38,8 +40,22 @@ function dataURItoBlob(dataURI: string) {
 }
 
 const Extended: React.FC<undefined> = () => {
+    const [input, setInput] = useState('');
+    const [output, setOutput] = useState('');
     const [mode, setMode] = useState(options[0]);
-    const [key, setKey] = useState('');
+    const [key, setKey] = useState('test');
+
+    useEffect(() => {
+        let result = '';
+        if (key !== '') {
+            if (mode === 'ENCRYPT') {
+                result = ExtendedVigenere.encrypt(input, key);
+            } else {
+                result = ExtendedVigenere.decrypt(input, key);
+            }
+        }
+        setOutput(result);
+    }, [input, mode, key]);
 
     const handleFiles = (files: { base64: any }) => {
         let result: string;
@@ -109,7 +125,7 @@ const Extended: React.FC<undefined> = () => {
                     </div>
                 )}
             </div>
-
+            <TextView onChange={setInput} />
             <div className="w-1/4 bg-white rounded-sm shadow-sm">
                 <div className="p-4 border-b text-center text-teal-500 text-xl font-bold">
                     Extended Vigenere
@@ -127,6 +143,7 @@ const Extended: React.FC<undefined> = () => {
                     <KeyInput onChange={setKey} />
                 </div>
             </div>
+            <TextOutput value={output} />
         </div>
     );
 };
