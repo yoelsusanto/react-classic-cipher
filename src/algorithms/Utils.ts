@@ -81,7 +81,7 @@ const generateStandardKey = (initkey: string, updateInput: string): string => {
     }
     //console.log(key)
     for (let i = 0; i < updateInput.length  - (removedDecimal * keyFixed.length); i += 1) {
-        console.log(' a ' ,keyFixed[i])
+      
         key += keyFixed[i];
     }
    // console.log(key)
@@ -243,36 +243,34 @@ const retransposeChiper = (chiper: string, key: string): string => {
     const total = totalIndexString(finalKey, key.length % 2);
 
     const seed = Math.round(total / 26) + 1;
-    console.log(seed);
-    const prevSeed = seed;
+  
+   
 
     const chiperRetranspose: string[] = new Array(cleanChipher.length).fill('');
-    let breakPoint = cleanChipher.length / seed - 1;
-    console.log(breakPoint);
-    let initial = 0;
-    for (let i = cleanChipher.length - 1; i >= 0; i -= 1) {
-        if (breakPoint === 0) {
-            breakPoint = i;
-        }
-        chiperRetranspose[initial] += cleanChipher[breakPoint];
-        console.log(chiperRetranspose[initial]);
-        initial += seed;
-        breakPoint--;
+    let breakPoint=0;
+    if (cleanChipher.length % seed === 0){
+        breakPoint = cleanChipher.length / seed;
+    } else {
+        breakPoint = Math.trunc(cleanChipher.length / seed) + 1;
     }
-    // console.log('aaaa', chiperRetranspose.join(''));
-    // seed--;
-    // prevSeed = seed;
-    // while (seed !== 0) {
-    //     for (let i = breakPoint; i < cleanChipher.length - 1; i++) {
-    //         if (i % prevSeed !== 0) {
-    //             chiperRetranspose[prevSeed] += ch[i];
-    //             prevSeed += seed;
-    //         }
-    //     }
-    //     prevSeed = seed;
-    //     seed--;
-    // }
 
+    let initial = cleanChipher.length - 1;
+    for (let i = 0 ; i < breakPoint; i += 1) {
+
+        chiperRetranspose[initial] += cleanChipher[i];
+        console.log(chiperRetranspose[initial]);
+        initial -=seed ;
+
+    }
+    initial = cleanChipher.length - 2;
+    for (let i = breakPoint; i < cleanChipher.length; i += 1) {
+
+        chiperRetranspose[initial] += cleanChipher[i];
+        console.log(chiperRetranspose[initial]);
+        initial -=seed ;
+    
+    }
+   
     return chiperRetranspose.join('');
 };
 const ALPHABET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';

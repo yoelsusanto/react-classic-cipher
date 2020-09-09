@@ -45,6 +45,7 @@ const Extended: React.FC<undefined> = () => {
                     id="file"
                     className="input-file"
                     accept=".txt"
+                    
                 />
             </div>
 
