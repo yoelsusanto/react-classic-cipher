@@ -1,4 +1,4 @@
-import { ALPHABET, changeInput } from './Utils';
+
 
 class ExtendedVigenere {
     public static encrypt(input: string, initKey: string): string {

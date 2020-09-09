@@ -197,21 +197,20 @@ const totalIndexString = (text: string, initValue: number): number => {
 };
 const transposeChiper = (chiper: string, key: string): string => {
     const ch = changeInput(chiper);
-    console.log(ch.length);
-    const reverseKey = changeInput(reverseString(key));
-    const finalKey = reverseKey[0] + key[0];
+    let key2= changeInput(key);
+
+
+    const finalKey = key[key.length-1] + key2[0];
     const total = totalIndexString(finalKey, key.length % 2);
 
     let seed = Math.round(total / 26) + 1;
-    console.log(seed);
-    const fixSeed = seed;
-    let prevSeed = seed;
-    const finalChipher = ch;
-    let chiperTranspose = reverseKey[0];
 
-    // for (let i = 0; i < ch.length % seed; i += 1) {
-    //     finalChipher += reverseKey[i];
-    // }
+
+    let prevSeed = seed;
+
+    let chiperTranspose = ALPHABET[key2.length*key2.length];
+
+
     for (let i = ch.length - 1; i >= 0; i -= 1) {
         if (i % seed === 0) {
             chiperTranspose += ch[i];
@@ -228,9 +227,6 @@ const transposeChiper = (chiper: string, key: string): string => {
         seed--;
     }
 
-    // for (let i = 0; i < ch.length % seed; i += 1) {
-    //     finalChipher += reverseKey[i];
-    // }
 
     return chiperTranspose;
 };
@@ -238,8 +234,9 @@ const transposeChiper = (chiper: string, key: string): string => {
 const retransposeChiper = (chiper: string, key: string): string => {
     const ch = changeInput(chiper);
     const cleanChipher = ch.substr(1, ch.length);
-    const reverseKey = changeInput(reverseString(key));
-    const finalKey = reverseKey[0] + key[0];
+    let key2= changeInput(key);
+
+    const finalKey = key[key.length-1] + key2[0];
     const total = totalIndexString(finalKey, key.length % 2);
 
     const seed = Math.round(total / 26) + 1;
@@ -258,7 +255,6 @@ const retransposeChiper = (chiper: string, key: string): string => {
     for (let i = 0 ; i < breakPoint; i += 1) {
 
         chiperRetranspose[initial] += cleanChipher[i];
-        console.log(chiperRetranspose[initial]);
         initial -=seed ;
 
     }
@@ -266,7 +262,6 @@ const retransposeChiper = (chiper: string, key: string): string => {
     for (let i = breakPoint; i < cleanChipher.length; i += 1) {
 
         chiperRetranspose[initial] += cleanChipher[i];
-        console.log(chiperRetranspose[initial]);
         initial -=seed ;
     
     }
