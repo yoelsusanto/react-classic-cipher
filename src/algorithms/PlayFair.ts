@@ -48,17 +48,8 @@ class PlayFairChiper {
         const withoutSpaces = removeSpaces(plainText);
         const alphabetOnly = removeNonAlphabet(withoutSpaces);
 
-        const jReplaced = alphabetOnly.replace('j', 'i');
-        let paddedWithX = '';
-        for (let i = 0; i < jReplaced.length; i += 1) {
-            if (i > 0 && jReplaced[i] === jReplaced[i - 1] && i % 2 === 0) {
-                paddedWithX = paddedWithX.concat('x');
-            }
-            paddedWithX = paddedWithX.concat(jReplaced[i]);
-        }
-
         const table = this.createPlayFairTable(cipherKey);
-        const arrayOfCharPair = this.separateIntoChunksOfTwo(paddedWithX);
+        const arrayOfCharPair = this.separateIntoChunksOfTwo(alphabetOnly);
 
         const decryptedCharArray = arrayOfCharPair.map((charPair) =>
             this.decryptPair(charPair, table),
