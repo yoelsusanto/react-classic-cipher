@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const AppFooter: React.FC<{}> = () => {
     return (
@@ -11,15 +12,36 @@ const AppFooter: React.FC<{}> = () => {
                 working of classical cipher.
             </p>
             <div className="flex mt-4 mb-3 font-medium">
-                <p className="mr-6">Simple Vigenere Cipher</p>
-                <p className="mr-6">Full Vigenere Cipher</p>
-                <p className="mr-6">Auto-key Vigenere Cipher</p>
-                <p className="mr-6">Extended Vigenere Cipher</p>
-                <p className="mr-6">Playfair Cipher</p>
-                <p className="mr-6">Super Encryption</p>
-                <p className="mr-6">Affine Cipher</p>
-                <p className="mr-6">Hill Cipher</p>
-                <p className="mr-6">Enigma Cipher</p>
+                <p className="mr-6">
+                    <Link to="/standardvigenere">Simple Vigenere Cipher</Link>
+                </p>
+                <p className="mr-6">
+                    <Link to="/fullvigenere">Full Vigenere Cipher</Link>
+                </p>
+                <p className="mr-6">
+                    <Link to="/autovigenere">Auto-key Vigenere Cipher</Link>
+                </p>
+                <p className="mr-6">
+                    <Link to="/extendedvigenere">Extended Vigenere Cipher</Link>
+                </p>
+                <p className="mr-6">
+                    <Link to="/playfair">Playfair Cipher</Link>
+                </p>
+                <p className="mr-6">
+                    <Link to="/extendedvigenere">Extended Vigenere Cipher</Link>
+                </p>
+                <p className="mr-6">
+                    <Link to="/superencryption">Super Encryption</Link>
+                </p>
+                <p className="mr-6">
+                    <Link to="/affine">Affine Cipher</Link>
+                </p>
+                <p className="mr-6">
+                    <Link to="/hillcipher">Hill Cipher</Link>
+                </p>
+                <p className="mr-6">
+                    <Link to="/enigma">Enigma Cipher</Link>
+                </p>
             </div>
         </div>
     );
