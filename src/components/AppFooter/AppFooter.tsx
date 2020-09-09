@@ -28,9 +28,6 @@ const AppFooter: React.FC<{}> = () => {
                     <Link to="/playfair">Playfair Cipher</Link>
                 </p>
                 <p className="mr-6">
-                    <Link to="/extendedvigenere">Extended Vigenere Cipher</Link>
-                </p>
-                <p className="mr-6">
                     <Link to="/superencryption">Super Encryption</Link>
                 </p>
                 <p className="mr-6">
